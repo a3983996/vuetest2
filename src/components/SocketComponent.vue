@@ -29,7 +29,7 @@
 
 <script>
 import io from "socket.io-client";
-import { onMounted, ref } from "@vue/runtime-core";
+import { onMounted, ref } from "vue";
 // const avatar = "../assets/assets5.jpg";
 export default {
   setup() {
@@ -44,8 +44,10 @@ export default {
     // const userInfo = reactive({ user: userList[0] });
     let socket;
     onMounted(() => {
-      // content.value.scroll = 100;
-      socket = io("http://xiaokai.ml:3001");
+      console.log(content.value);
+
+      socket = io("http://www.xiaokai.ml:3001", { secure: true });
+
       socket.on("connect", () => {
         console.log(socket.id, "監聽客戶端連接成功-connect");
         socket.emit("online", { username: socket.id });
@@ -59,7 +61,8 @@ export default {
     // };
     const sendMsg = () => {
       // socket.emit("send-message", userInfo.user, chatMsg.value);
-      socket.emit("send-message", chatMsg.value);
+      if (chatMsg.value.trim().length !== 0)
+        socket.emit("send-message", chatMsg.value);
       chatMsg.value = "";
     };
     return { chatList, chatMsg, sendMsg, openMessageBox, content };
@@ -86,7 +89,7 @@ export default {
   position: fixed;
   right: 2rem;
   bottom: 8rem;
-  z-index: 999;
+  z-index: 998;
   background-color: white;
   border-radius: 5px;
   border-bottom-right-radius: 0;

@@ -5,9 +5,14 @@
       <p>線上聯絡</p>
     </div>
     <div class="message_content" ref="content">
-      <div class="user1" v-for="chat in chatList" :key="chat">
+      <div
+        class="user1"
+        v-for="chat in chatList"
+        :key="chat"
+        :class="{ user_me: chat.user.name === socketId }"
+      >
         <p class="user_name">
-          {{ chat.user.name }}
+          {{ chat.user.name.substr(0, 3) }}
           <span class="user_time">{{ chat.createTime }}</span>
         </p>
         <p class="user_message">{{ chat.message }}</p>
@@ -39,12 +44,14 @@ export default {
     //   { name: "jay", id: 1, avatar },
     // ];
     // const userInfo = reactive({ user: userList[0] });
+    const socketId = ref("");
     let socket;
     onMounted(() => {
       socket = io("http://www.xiaokai.ml:3001", { secure: true });
 
       socket.on("connect", () => {
         console.log(socket.id, "監聽客戶端連接成功-connect");
+        socketId.value = socket.id;
         socket.emit("online", { username: socket.id });
       });
       socket.on("fresh-message", async (data) => {
@@ -79,6 +86,7 @@ export default {
       sendMsg,
       openMessageBox,
       content,
+      socketId,
     };
   },
 };
@@ -155,6 +163,9 @@ export default {
       .user_message {
         font-weight: bold;
       }
+    }
+    .user_me {
+      align-items: flex-end;
     }
   }
   .message_input {

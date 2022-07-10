@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="open_instant_message_box"
-    @click="openMessageBox = openMessageBox === false ? true : false"
-  ></div>
+  <div class="open_instant_message_box" @click="setOpenMessageBox"></div>
   <div class="instant_message_box" v-if="openMessageBox">
     <div class="message_title">
       <p>線上聯絡</p>
@@ -29,7 +26,7 @@
 
 <script>
 import io from "socket.io-client";
-import { onMounted, ref } from "vue";
+import { nextTick, onMounted, ref } from "vue";
 // const avatar = "../assets/assets5.jpg";
 export default {
   setup() {
@@ -44,28 +41,45 @@ export default {
     // const userInfo = reactive({ user: userList[0] });
     let socket;
     onMounted(() => {
-      console.log(content.value);
-
       socket = io("http://www.xiaokai.ml:3001", { secure: true });
 
       socket.on("connect", () => {
         console.log(socket.id, "監聽客戶端連接成功-connect");
         socket.emit("online", { username: socket.id });
       });
-      socket.on("fresh-message", (data) => {
+      socket.on("fresh-message", async (data) => {
         chatList.value = data;
+        await nextTick();
+        if (content.value != null) {
+          content.value.scrollTop = content.value.scrollHeight;
+        }
       });
     });
     // const selectUser = (user) => {
     //   userInfo.user = user;
     // };
+    content;
+    const setOpenMessageBox = async () => {
+      openMessageBox.value = openMessageBox.value === false ? true : false;
+      await nextTick();
+      if (openMessageBox.value == true) {
+        content.value.scrollTop = content.value.scrollHeight;
+      }
+    };
     const sendMsg = () => {
       // socket.emit("send-message", userInfo.user, chatMsg.value);
       if (chatMsg.value.trim().length !== 0)
         socket.emit("send-message", chatMsg.value);
       chatMsg.value = "";
     };
-    return { chatList, chatMsg, sendMsg, openMessageBox, content };
+    return {
+      setOpenMessageBox,
+      chatList,
+      chatMsg,
+      sendMsg,
+      openMessageBox,
+      content,
+    };
   },
 };
 </script>

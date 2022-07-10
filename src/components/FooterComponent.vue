@@ -28,17 +28,19 @@ footer {
     position: absolute;
     background-size: cover;
     width: 100%;
-    height: 80vh;
+    height: 70vh;
     background-color: rgba($color: #ffffff, $alpha: 0.6);
   }
   .footer {
     position: absolute;
     width: 100%;
-    height: 80vh;
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     background: url("../assets/assets25.png") no-repeat;
+    filter: drop-shadow(0px -5px 20px rgba(0, 0, 0, 0.7));
+
     background-position: center top;
     background-size: cover;
     // mix-blend-mode: screen;
@@ -46,9 +48,9 @@ footer {
 
     .content {
       width: 100%;
-      height: 30%;
+      height: 5vh;
       font-weight: bold;
-      background-color: rgba($color: #000000, $alpha: 0.3);
+      background-color: rgba($color: #000000, $alpha: 1);
       box-shadow: 0px -10px 200px 1px #000000;
       // backdrop-filter: blur(4px);
       // box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.2);

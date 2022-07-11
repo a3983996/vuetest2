@@ -87,7 +87,6 @@ export default {
   width: 100%;
   height: 100vh;
   position: relative;
-
   .container1 {
     position: absolute;
     top: 0;

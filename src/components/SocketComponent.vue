@@ -63,6 +63,7 @@ export default {
       socket = io("http://www.xiaokai.ml:3001", { secure: true });
       socket.on("connect", () => {
         console.log(socket.id, "監聽客戶端連接成功-connect");
+        audio.value.src = require("@/assets/beep.mp3");
         socketId.value = socket.id;
         socket.emit("online", { username: socket.id });
       });
@@ -71,9 +72,11 @@ export default {
         if (audio.value && !openMessageBox.value) {
           onread.value++;
           if (openSound.value) {
-            audio.value.src = require("@/assets/sound.mp3");
             audio.value.play();
           }
+        }
+        if (!document.hasFocus() && openSound.value) {
+          audio.value.play();
         }
         await nextTick();
 
@@ -121,8 +124,8 @@ export default {
   width: 200px;
   height: 100px;
   position: fixed;
-  right: 2rem;
-  top: 2rem;
+  right: 10rem;
+  bottom: 2rem;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -131,6 +134,7 @@ export default {
   filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.7));
   border-radius: 3px;
   z-index: 999;
+  animation: openbeep 1s infinite;
   p {
     margin-bottom: 1rem;
   }
@@ -264,6 +268,15 @@ export default {
       color: white;
       cursor: pointer;
     }
+  }
+}
+@keyframes openbeep {
+  from,
+  to {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
   }
 }
 </style>

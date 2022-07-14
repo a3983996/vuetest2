@@ -87,6 +87,9 @@ export default {
   width: 100%;
   height: 100vh;
   position: relative;
+  background: rgba($color: #000000, $alpha: 1);
+  overflow: hidden;
+
   .container1 {
     position: absolute;
     top: 0;

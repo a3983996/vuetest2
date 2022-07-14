@@ -16,6 +16,7 @@
         </ul>
         <P>資料來源:Google、Pexels、Unsplash</P>
         <p class="mycopy">&copy;僅個人作品練習，無任何商業用途</p>
+        <router-link to="/admin/login" class="setting"></router-link>
       </div>
     </div>
   </footer>
@@ -74,6 +75,12 @@ footer {
             }
           }
         }
+      }
+      .setting {
+        background: url("../assets/setting.svg") no-repeat center center;
+        background-size: cover;
+        width: 30px;
+        height: 30px;
       }
     }
   }

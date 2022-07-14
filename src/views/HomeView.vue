@@ -216,8 +216,6 @@ export default {
     left: 0;
 
     .backgroundbox {
-      overflow: hidden;
-      background: rgba($color: #000000, $alpha: 1);
       position: relative;
       .scrollto {
         cursor: pointer;

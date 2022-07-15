@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkvuetest2"]=self["webpackChunkvuetest2"]||[]).push([[421],{3421:function(e,t,u){u.r(t),u.d(t,{default:function(){return f}});var n=u(3396);function r(e,t,u,r,s,c){return(0,n.wg)(),(0,n.iD)("div",null,"123")}var s={setup(){return{}}},c=u(89);const a=(0,c.Z)(s,[["render",r]]);var f=a}}]);
+//# sourceMappingURL=421.0a756a7a.js.map

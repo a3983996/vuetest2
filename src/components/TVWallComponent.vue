@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, onUnmounted } from "vue";
 export default {
   props: {
     tvwallList: {
@@ -38,8 +38,9 @@ export default {
   setup() {
     const itemRefs = ref([]);
     const active = ref(0);
+    let timer;
     onMounted(() => {
-      let timer = new Timer(() => {
+      timer = new Timer(() => {
         active.value++;
         if (active.value === itemRefs.value.length) {
           active.value = 0;
@@ -49,7 +50,9 @@ export default {
         timer.reset(8000);
       });
     });
-
+    onUnmounted(() => {
+      timer.stop();
+    });
     function Timer(fn, t) {
       var timerObj = setInterval(fn, t);
 

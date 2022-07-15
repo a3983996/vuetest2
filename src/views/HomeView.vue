@@ -15,7 +15,7 @@
           <div class="iframebox">
             <div class="adaptive_frame">
               <iframe
-                src="https://www.youtube.com/embed/WrVeevMdX44"
+                src="https://www.youtube-nocookie.com/embed/WrVeevMdX44"
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -49,7 +49,7 @@
           <div class="iframebox">
             <div class="adaptive_frame">
               <iframe
-                src="https://www.youtube.com/embed/WrVeevMdX44"
+                src="https://www.youtube-nocookie.com/embed/WrVeevMdX44"
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -83,7 +83,7 @@
           <div class="iframebox">
             <div class="adaptive_frame">
               <iframe
-                src="https://www.youtube.com/embed/WrVeevMdX44"
+                src="https://www.youtube-nocookie.com/embed/WrVeevMdX44"
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -120,7 +120,7 @@
 <script>
 import TVWallComponent from "@/components/TVWallComponent.vue";
 import SocketComponent from "@/components/SocketComponent.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 export default {
   name: "HomeView",
   components: {
@@ -177,13 +177,13 @@ export default {
         }, time);
       };
     }
+    let throcheck = throttle(checkSlide);
+
     onMounted(() => {
-      window.addEventListener("scroll", throttle(checkSlide));
-      document
-        .querySelector(".iframebox")
-        .addEventListener("animationend", (e) => {
-          e.targer.style = "display:none";
-        });
+      window.addEventListener("scroll", throcheck);
+    });
+    onBeforeUnmount(() => {
+      window.removeEventListener("scroll", throcheck);
     });
     function scrollto() {
       window.scrollTo(0, backgroundbox.value.clientHeight);

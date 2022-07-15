@@ -41,7 +41,7 @@
 
 <script>
 import io from "socket.io-client";
-import { nextTick, onMounted, ref } from "vue";
+import { nextTick, onMounted, onUnmounted, ref } from "vue";
 // const avatar = "../assets/assets5.jpg";
 export default {
   setup() {
@@ -84,6 +84,9 @@ export default {
           content.value.scrollTop = content.value.scrollHeight;
         }
       });
+    });
+    onUnmounted(() => {
+      socket.disconnect();
     });
     // const selectUser = (user) => {
     //   userInfo.user = user;

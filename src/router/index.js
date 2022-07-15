@@ -5,11 +5,10 @@ const routes = [
     path: "/",
     name: "user",
     component: () => import("../views/UserView.vue"),
-
     children: [
       {
         path: "home",
-        name: "homes",
+        name: "home",
         component: () => import("../views/HomeView.vue"),
       },
     ],
@@ -22,8 +21,13 @@ const routes = [
     children: [
       {
         path: "login",
-        name: "login",
-        component: () => import("../views/LoginView.vue"),
+        name: "adminLogin",
+        component: () => import("../views/AdminLogin.vue"),
+      },
+      {
+        path: "product",
+        name: "adminProduct",
+        component: () => import("../views/AdminProduct.vue"),
       },
     ],
   },

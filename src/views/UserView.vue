@@ -10,6 +10,7 @@
 import NavbarComponent from "../components/NavbarComponent.vue";
 import FooterComponent from "../components/FooterComponent.vue";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 export default {
   components: {
     NavbarComponent,
@@ -19,6 +20,8 @@ export default {
     const isLoading = ref(true);
     isLoading.value = false;
     const isWhiteNav = ref(false);
+    const router = useRouter();
+    router.push({ name: "home" });
 
     return {
       isLoading,

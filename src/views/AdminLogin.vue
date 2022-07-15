@@ -29,41 +29,15 @@
 
       <button type="submit" class="">登入</button>
     </form>
-    <form @submit.prevent="register" class="form_login">
-      <p>後台註冊</p>
-      <div class="item_info">
-        <input
-          type="email"
-          autocomplete="on"
-          class="form-control"
-          v-model="user.username"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-          required
-        />
-        <label for="exampleInputEmail1" class="">Email address</label>
-      </div>
-      <div class="item_info">
-        <input
-          type="password"
-          autocomplete="on"
-          class="form-control"
-          v-model="user.password"
-          id="exampleInputPassword1"
-          required
-        />
-        <label for="exampleInputPassword1" class="">Password</label>
-      </div>
 
-      <button type="submit" class="">註冊</button>
-    </form>
+    <button type="button" @click="register" class="register">註冊</button>
   </div>
 </template>
 
 <script>
 import TVWallComponent from "@/components/TVWallComponent.vue";
-import bcrypt from "bcryptjs";
 import { ref, reactive, inject } from "vue";
+import { useRouter } from "vue-router";
 export default {
   components: {
     TVWallComponent,
@@ -74,30 +48,32 @@ export default {
       require("@/assets/background1.jpg"),
       require("@/assets/background2.jpg"),
     ]);
+    const router = useRouter();
     const axios = inject("axios");
     const user = reactive({ username: "", password: "" });
-    function encryptPassword(password) {
-      const salt = bcrypt.genSaltSync(10);
-      return bcrypt.hashSync(password, salt);
+    function register() {
+      axios.post("http://www.xiaokai.ml/admin/register").then((res) => {
+        console.log(res.data);
+      });
     }
+
     function signIn() {
       let account = user.username;
-      let hashpassword = encryptPassword(user.password);
+      let password = user.password;
       axios
-        .post("http://www.xiaokai.ml/admin/signin", { account, hashpassword })
+        .post("http://www.xiaokai.ml/admin/signin", { account, password })
         .then((res) => {
           console.log(res.data);
+          if (res.data.success) {
+            const { token } = res.data;
+            document.cookie = `hexToken=${token};
+           max-age=5`;
+            router.push({ name: "adminProduct" });
+            console.log("登入成功");
+          }
         });
     }
-    function register() {
-      let account = user.username;
-      let hashpassword = encryptPassword(user.password);
-      axios
-        .post("http://www.xiaokai.ml/admin/register", { account, hashpassword })
-        .then((res) => {
-          console.log(res.data);
-        });
-    }
+
     // function signI() {
     //   const api = `${process.env.VUE_APP_API}admin/signin`;
     //   axios.post(api, user).then((res) => {
@@ -126,6 +102,15 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  .register {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    border: white 1px solid;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+  }
   .form_login {
     position: absolute;
     background-color: rgba($color: #ffffff, $alpha: 0.8);
@@ -138,11 +123,7 @@ export default {
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    &:nth-child(3) {
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-    }
+
     p {
       font-size: 2rem;
       font-weight: bold;

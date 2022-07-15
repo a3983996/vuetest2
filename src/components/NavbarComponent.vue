@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, toRefs } from "vue";
+import { ref, onMounted, onUnmounted, watch, toRefs } from "vue";
 export default {
   props: {
     isWhiteNav: {
@@ -36,14 +36,18 @@ export default {
   },
   setup(props) {
     const navbar = ref(null);
+    function navbarlistening() {
+      if (scrollY > 50) {
+        navbar.value.classList.add("navbar-small");
+      } else {
+        navbar.value.classList.remove("navbar-small");
+      }
+    }
     onMounted(() => {
-      window.addEventListener("scroll", () => {
-        if (scrollY > 50) {
-          navbar.value.classList.add("navbar-small");
-        } else {
-          navbar.value.classList.remove("navbar-small");
-        }
-      });
+      window.addEventListener("scroll", navbarlistening);
+    });
+    onUnmounted(() => {
+      window.removeEventListener("scroll", navbarlistening);
     });
     const { isWhiteNav } = toRefs(props);
     watch(isWhiteNav, (newValue) => {

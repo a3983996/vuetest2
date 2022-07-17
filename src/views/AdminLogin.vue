@@ -66,10 +66,8 @@ export default {
           console.log(res.data);
           if (res.data.success) {
             const { token } = res.data;
-            document.cookie = `hexToken=${token};
-           max-age=5`;
-            router.push({ name: "adminProduct" });
-            console.log("登入成功");
+            document.cookie = `hexToken=${token};`;
+            router.push("/admin/product");
           }
         });
     }

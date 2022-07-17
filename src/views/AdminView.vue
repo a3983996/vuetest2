@@ -14,14 +14,13 @@ export default {
       "$1"
     );
     if (!token) {
-      router.push("/admin/login");
+      router.push("/adminLogin");
     }
     axios.defaults.headers.common["Authorization"] = "Bearer " + token;
     const api = `${process.env.VUE_APP_API}/api/user/check`;
-    console.log(api);
     axios.post(api).then((res) => {
       if (!res.data.success) {
-        // router.push("/admin/login");
+        router.push("/adminLogin");
       }
     });
     return {};

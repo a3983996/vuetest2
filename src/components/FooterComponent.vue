@@ -16,7 +16,7 @@
         </ul>
         <P>資料來源:Google、Pexels、Unsplash</P>
         <p class="mycopy">&copy;僅個人作品練習，無任何商業用途</p>
-        <router-link to="/admin/login" class="setting"></router-link>
+        <router-link to="/adminlogin" class="setting"></router-link>
       </div>
     </div>
   </footer>

@@ -15,15 +15,15 @@ const routes = [
   },
 
   {
+    path: "/adminLogin",
+    name: "adminLogin",
+    component: () => import("../views/AdminLogin.vue"),
+  },
+  {
     path: "/admin",
     name: "admin",
     component: () => import("../views/AdminView.vue"),
     children: [
-      {
-        path: "login",
-        name: "adminLogin",
-        component: () => import("../views/AdminLogin.vue"),
-      },
       {
         path: "product",
         name: "adminProduct",
